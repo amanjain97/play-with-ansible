@@ -13,3 +13,8 @@ You can run in debug mode
 ```bash
 $ ansible-playbook -i inventory/hosts playbooks/playbook.yaml -vvv 
 ```
+## How to install ansible for MacOS
+```bash 
+$ brew install ansible
+```
+Check [Installation](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
