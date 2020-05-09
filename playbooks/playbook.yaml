@@ -1,0 +1,31 @@
+---
+- hosts: staging-server
+  remote_user: root
+  become: yes
+  vars:
+  - homeDir: /root
+  - appDir: repoWebsite/website
+  tasks:
+  - name: Test run
+    shell: echo "Ansible chal rha hai"
+  - name: git pull <your github>
+    # change repo (make sure, root user (line 2) has access to download repo or pull repo)
+    # change version to checkout a particular branch
+    git: repo=https://github.com/amanjain97/Pagerduty-orb
+         dest=/var/www/store-frontend/Pager
+         version=master
+         update=true
+  - name: npm install
+    npm:
+      path: /root/repoWebsite/website
+  - name: npm run build:staging:bread
+    command: npm run build:staging:bread
+  - name: Stop APP
+    command: npm stop app chdir=/root/repoWebsite/website
+    ignore_errors: yes
+  - name: Start APP
+    # need to fix this command
+    command: npm run build:staging:bread chdir=/root/repoWebsite/website
+    ignore_errors: yes
+  - name: restart apache
+    shell: service nginx reload && sleep 10
